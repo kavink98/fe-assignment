@@ -1,23 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import Transfer from './Components/Transfer';
+import { useState } from 'react';
 
 function App() {
+
+
+
+  const fromAddress = "0xDBC05B1ECB4FDAEF943819C0B04E9EF6DF4BABD6";
+  const toAddress = "0x721B68FA152A930F3DF71F54AC1CE7ED3AC5F867";
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Transfer fromAddress={fromAddress} toAddress={toAddress}/>
     </div>
   );
 }
