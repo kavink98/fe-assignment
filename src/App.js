@@ -5,16 +5,64 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Transfer from './Components/Transfer';
 import { useState } from 'react';
+import { AppBar, Box, Button, Drawer, IconButton, List, ListItem, Tab, Tabs, Toolbar, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import Address from './Components/Address';
+
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
 
 function App() {
 
+  const [value, setValue] = useState(0)
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    console.log(newValue);
+  };
 
-  const fromAddress = "0xDBC05B1ECB4FDAEF943819C0B04E9EF6DF4BABD6";
-  const toAddress = "0x721B68FA152A930F3DF71F54AC1CE7ED3AC5F867";
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
+
   return (
     <div className="App">
-        <Transfer fromAddress={fromAddress} toAddress={toAddress}/>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="Item Three" {...a11yProps(2)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        <Transfer/>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Address/>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
     </div>
   );
 }
