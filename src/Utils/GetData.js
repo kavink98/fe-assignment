@@ -7,12 +7,6 @@ export const getData = async (filename) => {
             }
         }
     )
-    //   .then(function(response){
-    //     console.log(response)
-    //     return response.json();
-    //   })
-    //   .then(function(myJson) {
-    //   });
     const json = await res.json();
     return json;
 }

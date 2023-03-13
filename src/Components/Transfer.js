@@ -1,15 +1,15 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { padding } from "@mui/system";
-import React, {useState } from "react";
+import React, {useContext, useEffect, useState } from "react";
 import Receipt from "./Receipt";
+import { AddressContext } from "../Utils/AddressContext";
 
-export default function Transfer(props) {
+export default function Transfer({address, setSubmitStatus, submitStatus}) {
 
-    const fromAddress = "0xDBC05B1ECB4FDAEF943819C0B04E9EF6DF4BABD6";
-    const toAddress = "0x721B68FA152A930F3DF71F54AC1CE7ED3AC5F867";
+    const fromAddress = useContext(AddressContext);
+    const toAddress = address;
 
     const [validAmount, setValidAmount] = useState(true);
-    const [submitStatus, setSubmitStatus] = useState(false);
     const [transferAmount, setTransferAmount] = useState();
     const [count, setCount] = useState(0);
 
@@ -36,14 +36,11 @@ export default function Transfer(props) {
                     <Typography>
                         <b>To:</b> {toAddress}
                     </Typography>
-                    <TextField type='number' id="amount" label="Amount" variant="standard" onChange={handleAmountChange} />
+                    <TextField type='number' id="amount" label="Amount" variant="standard" onChange={handleAmountChange} disabled={submitStatus} />
                     <br />
-                    <Button variant="contained" sx={{ marginTop: 1 }} onClick={handleSubmit}> Submit </Button>
-                    <Button onClick={()=>setCount(count+1)}>{count}</Button>
+                    <Button variant="contained" sx={{ marginTop: 1 }} onClick={handleSubmit} disabled={submitStatus}> Submit </Button>
                 </Paper>
             </Grid>
-
-            {submitStatus && <Receipt fromAddress={fromAddress} toAddress={toAddress} />}
         </Grid></React.Fragment>
     )
 }

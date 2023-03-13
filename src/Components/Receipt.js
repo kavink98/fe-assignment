@@ -1,9 +1,10 @@
 import { Grid, Paper, Typography } from "@mui/material";
+import { useContext } from "react";
+import { AddressContext } from "../Utils/AddressContext";
 
-export default function Receipt(props) {
+export default function Receipt({toAddress}) {
 
-    const fromAddress = props.fromAddress;
-    const toAddress = props.toAddress;
+    const fromAddress = useContext(AddressContext);
 
     const transactionHash = "F1951437AF56035A597377CAEF1787138904E24AD71330F59B88C147D26AF20C";
     const blockHash = "3FD87FA43712D341358127B2ADFA4BD79508B22A837F60977119942D71C6EAE5";

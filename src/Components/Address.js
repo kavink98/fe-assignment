@@ -1,12 +1,18 @@
-import { Button, Menu, MenuItem, Typography } from "@mui/material";
+import { Autocomplete, Button, Grid, Menu, MenuItem, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { Fragment, useEffect, useState } from "react";
-import { getData } from "./Utils/GetData";
+import Receipt from "./Receipt";
+import Transfer from "./Transfer";
+import { getData } from "../Utils/GetData";
+
+const ITEM_HEIGHT = 200;
 
 export default function Address(props) {
 
     const [addressList, setAddressList] = useState([]);
     const [transferAddress, setTransferAddress] = useState();
-    const [listOpen, setListOpen] = useState(false)
+    const [reset, setReset] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(false);
 
     const getAddresses = async () => {
         const res = await getData('addresses.json');
@@ -17,40 +23,31 @@ export default function Address(props) {
         getAddresses();
     }, [])
 
-    const handleClick = (event) => {
-        setListOpen(true);
-        setTransferAddress(event.currentTarget);
-      };
+    const handleNewTransfer = () => {
+        setAddressList([]);
+        setTransferAddress(null);
+        setSubmitStatus(false);
+        setReset((curr)=>!curr);
+    };
 
-    const handleClose = () => {
-        setListOpen(false)
-    }
 
     return (
-        <Fragment>
-            <Button
-                id="basic-button"
-                aria-controls={listOpen ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={listOpen ? 'true' : undefined}
-                onClick={handleClick}
-            >
-                Select Address
-            </Button>
-            <Menu
-                id="basic-menu"
-                anchorEl={transferAddress}
-                open={listOpen}
-                onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
-            >
-               {addressList.map((address => (
-                <MenuItem onClick={handleClose}>{address}</MenuItem>
-               )))}
-            </Menu>
-        </Fragment>
+        <Box sx={{ flexDirection: 'column' }}>
+            <Autocomplete
+                disablePortal
+                id="select-address"
+                options={addressList}
+                sx={{ width: 500 }}
+                renderInput={(params) => <TextField {...params} label="Address" />}
+                onChange={(event, address) => setTransferAddress(address)}
+                disabled={submitStatus}
+            />
+            {transferAddress && <Transfer address={transferAddress} setSubmitStatus={setSubmitStatus} submitStatus={submitStatus} />}
+            {submitStatus && <Fragment>
+                <Receipt toAddress={transferAddress} />
+                <Button onClick={handleNewTransfer}>New Transfer</Button>
+            </Fragment>}
+        </Box>
     )
 
 }
