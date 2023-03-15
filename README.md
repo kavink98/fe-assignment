@@ -1,3 +1,7 @@
+# Student Info
+Name: Kavin Kumar
+Student ID: 101432694 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
