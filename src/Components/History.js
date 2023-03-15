@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import {useEffect, useState } from "react";
 import { getData } from "../Utils/GetData";
 
-export function History(props) {
+export default function History(props) {
 
     const [transactionHistory, setTransactionHistory] = useState(null);
 
