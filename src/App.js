@@ -4,11 +4,11 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { useState } from 'react';
-import { Box, Tab, Tabs} from '@mui/material';
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import { AddressContext } from './Utils/AddressContext';
-import Address from './Components/Address';
-import Wallet from './Components/Wallet';
-import { History } from './Components/History';
+import Home from './Components/Home';
+import { Link, Route, Routes } from 'react-router-dom';
+import Login from './Components/Login';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -49,22 +49,21 @@ function App() {
 
     <div className="App">
       <AddressContext.Provider value="0xDBC05B1ECB4FDAEF943819C0B04E9EF6DF4BABD6">
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Address" {...a11yProps(0)} />
-            <Tab label="Wallet" {...a11yProps(1)} />
-            <Tab label="Transaction History" {...a11yProps(2)} />
-          </Tabs>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="static">
+            <Toolbar>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Blockchain Explorer
+              </Typography>
+              <Button component={Link} color="inherit" to="/">Home</Button>
+              <Button component={Link} color="inherit" to="/login">Login</Button>
+            </Toolbar>
+          </AppBar>
         </Box>
-        <TabPanel value={value} index={0}>
-          <Address />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Wallet />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <History />
-        </TabPanel>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </AddressContext.Provider>
     </div>
   );
