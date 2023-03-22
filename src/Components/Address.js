@@ -15,8 +15,8 @@ export default function Address(props) {
     const [submitStatus, setSubmitStatus] = useState(false);
 
     const getAddresses = async () => {
-        const res = await getData('addresses.json');
-        setAddressList(res);
+        const res = await getData('http://localhost:3001/wallets');
+        setAddressList(res.map(wallet => wallet.address));
     }
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function Address(props) {
         setAddressList([]);
         setTransferAddress(null);
         setSubmitStatus(false);
-        setReset((curr)=>!curr);
+        setReset((curr) => !curr);
     };
 
 
