@@ -1,7 +1,7 @@
 import { Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { AddressContext } from "../Utils/AddressContext";
-import { getData } from "../Utils/GetData";
+import { getData } from "../Utils/DataHandler";
 
 export default function (props) {
 
@@ -9,8 +9,9 @@ export default function (props) {
     const address = useContext(AddressContext);
 
     const getBalance = async () => {
-        const res = await getData('balance.json');
-        setBalance(res.balance);
+        const walletData = await getData('/wallets/' + address);
+        console.log(walletData)
+        setBalance(walletData.balance);
     }
 
     useEffect(() => {
@@ -24,11 +25,11 @@ export default function (props) {
             margin: 1
         }}>
             <Typography>
-                    <b>Wallet Address: </b> {address}
-                </Typography>
-                <Typography>
-                    <b>Balance: </b> {balance + ' ETH'}
-                </Typography>
+                <b>Wallet Address: </b> {address}
+            </Typography>
+            <Typography>
+                <b>Balance: </b> {balance + ' ETH'}
+            </Typography>
         </Paper>
     )
 }
