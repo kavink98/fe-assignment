@@ -10,7 +10,6 @@ export default function (props) {
 
     const getBalance = async () => {
         const walletData = await getData('/wallets/' + address);
-        console.log(walletData)
         setBalance(walletData.balance);
     }
 
