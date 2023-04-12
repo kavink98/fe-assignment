@@ -9,8 +9,8 @@ export default function (props) {
     const address = useContext(AddressContext);
 
     const getBalance = async () => {
-        const walletData = await getData('/wallets/' + address);
-        setBalance(walletData.balance);
+        const balance = await getData('/wallets/' + address);
+        setBalance(balance);
     }
 
     useEffect(() => {

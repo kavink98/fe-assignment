@@ -1,13 +1,12 @@
 import { Grid, Paper, Typography } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AddressContext } from "../Utils/AddressContext";
 
-export default function Receipt({ toAddress, hash }) {
+export default function Receipt({ transactionData }) {
 
-    const fromAddress = useContext(AddressContext);
-    const blockHash = "3FD87FA43712D341358127B2ADFA4BD79508B22A837F60977119942D71C6EAE5";
-    const blockNumber = 34;
-    const gas = 20000;
+    useEffect(() => {
+        console.log(transactionData);
+    })
 
     return (
         <Grid item>
@@ -20,22 +19,22 @@ export default function Receipt({ toAddress, hash }) {
                     Receipt
                 </Typography>
                 <Typography>
-                    <b>Transaction Hash: </b> {hash}
+                    <b>Transaction Hash: </b> {transactionData.transactionHash}
                 </Typography>
                 <Typography>
-                    <b>Block Hash: </b> {blockHash}
+                    <b>Block Hash: </b> {transactionData.blockHash}
                 </Typography>
                 <Typography>
-                    <b>Block Number: </b> {blockNumber}
+                    <b>Block Number: </b> {transactionData.blockNumber}
                 </Typography>
                 <Typography>
-                    <b>From: </b> {fromAddress}
+                    <b>From: </b> {transactionData.fromAddress}
                 </Typography>
                 <Typography>
-                    <b>To: </b> {toAddress}
+                    <b>To: </b> {transactionData.toAddress}
                 </Typography>
                 <Typography>
-                    <b>Gas Used: </b> {gas}
+                    <b>Gas Used: </b> {transactionData.gas}
                 </Typography>
             </Paper>
         </Grid>

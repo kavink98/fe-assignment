@@ -29,10 +29,10 @@ export default function History(props) {
                         <b>Transaction Hash: </b> {transaction.transactionHash}
                     </Typography>
                     <Typography>
-                        <b>Status: </b> {transaction.status}
+                        <b>Status: </b> SUCCESS
                     </Typography>
                     <Typography>
-                        <b>Timestamp: </b> {new Date(transaction.timestamp).toISOString()}
+                        <b>Timestamp: </b> {new Date(transaction.timestamp * 1000).toISOString()}
                     </Typography>
                     <Typography>
                         <b>From: </b> {transaction.fromAddress}

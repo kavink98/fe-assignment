@@ -6,7 +6,7 @@ import { AddressContext } from "../Utils/AddressContext";
 import { postData } from "../Utils/DataHandler";
 import { SHA256 } from "crypto-js";
 
-export default function Transfer({ address, setSubmitStatus, submitStatus, setTransactionHash }) {
+export default function Transfer({ address, setSubmitStatus, submitStatus, setTransactionData }) {
 
     const fromAddress = useContext(AddressContext);
     const toAddress = address;
@@ -19,19 +19,19 @@ export default function Transfer({ address, setSubmitStatus, submitStatus, setTr
         setTransferAmount(parseInt(e.target.value));
     }
 
-    const handleSubmit = () => {
-        const hash = String(SHA256(String(Math.random() * Math.random() + transferAmount)));
-        setTransactionHash(hash)
-        postData('/transactions', {
+    const sendTransaction = async () => {
+        const transactionData = await postData('/transactions', {
             toAddress: toAddress,
             fromAddress: fromAddress,
-            gasUsed: 20000,
             amount: transferAmount,
-            timestamp: new Date(),
-            transactionHash: hash,
-            status: "SUCCESS",
+            password: 'password'
+        });
+        console.log(transactionData);
+        setTransactionData(transactionData.transactionReceipt);
+    }
 
-        })
+    const handleSubmit = () => {
+        sendTransaction();
         setSubmitStatus(true);
     }
 

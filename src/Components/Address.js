@@ -15,13 +15,17 @@ export default function Address(props) {
     const [transferAddress, setTransferAddress] = useState();
     const [reset, setReset] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(false);
-    const [transactionHash, setTransactionHash] = useState();
+    const [transactionData, setTransactionData] = useState({});
 
     const address = useContext(AddressContext);
 
     const getAddresses = async () => {
         const res = await getData('/wallets');
-        setAddressList(res.map(wallet => wallet.address));
+        let index = res.indexOf(address);
+        if (index !== -1) {
+            res.splice(index, 1);
+        }
+        setAddressList(res);
     }
 
     useEffect(() => {
@@ -46,9 +50,9 @@ export default function Address(props) {
                 onChange={(event, address) => setTransferAddress(address)}
                 disabled={submitStatus}
             />
-            {transferAddress && <Transfer address={transferAddress} setSubmitStatus={setSubmitStatus} submitStatus={submitStatus} setTransactionHash={setTransactionHash} />}
-            {submitStatus && <Fragment>
-                <Receipt toAddress={transferAddress} hash={transactionHash} />
+            {transferAddress && <Transfer address={transferAddress} setSubmitStatus={setSubmitStatus} submitStatus={submitStatus} setTransactionData={setTransactionData} />}
+            {submitStatus && transactionData && <Fragment>
+                <Receipt transactionData={transactionData} />
                 <Button onClick={handleNewTransfer}>New Transfer</Button>
             </Fragment>}
         </Box>
