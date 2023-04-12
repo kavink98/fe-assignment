@@ -1,6 +1,11 @@
 # Student Info
 Name: Kavin Kumar
+
+
 Student ID: 101432694 
+
+# Interacting with the blockchain
+After following the instructions in the backend readme to set up the local blockchain pick one of the wallet address and replace it in the context provider in [app.js](/src/App.js)
 
 # Getting Started with Create React App
 
