@@ -34,7 +34,7 @@ export default function Receipt({ transactionData }) {
                     <b>To: </b> {transactionData.toAddress}
                 </Typography>
                 <Typography>
-                    <b>Gas Used: </b> {transactionData.gas}
+                    <b>Gas Used: </b> {transactionData.gasUsed}
                 </Typography>
             </Paper>
         </Grid>
